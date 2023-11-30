@@ -22,11 +22,13 @@ public class ItemRequest {
 
     private Double price;
 
-    private byte[] photo;
+    private String photo;
 
     private Long category;
 
-    public ItemRequest(String title, String description, Double price, byte[] photo, Long category) {
+    private int stock;
+
+    public ItemRequest(String title, String description, Double price, String photo, Long category) {
         this.title = title;
         this.description = description;
         this.price = price;

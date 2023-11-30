@@ -23,13 +23,13 @@ public class Order {
     private Long id;
 
     @OneToMany(mappedBy = "order")
-    private List<OrderedItem> orderedBook;
+    private List<OrderedItem> orderedItems;
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private AppUser appUser;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "status_id", referencedColumnName = "id")
     private OrderStatus orderStatus;
 

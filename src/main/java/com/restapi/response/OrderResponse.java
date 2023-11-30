@@ -19,8 +19,8 @@ public class OrderResponse {
     private Long id;
     private List<OrderedItem> orderedItems;
     private Long userId;
-    private String name;
     private String userName;
+    private String name;
     private Address address;
     private String orderStatus;
 }

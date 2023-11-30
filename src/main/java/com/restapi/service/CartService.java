@@ -12,6 +12,7 @@ import com.restapi.response.CartResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,6 +32,7 @@ public class CartService {
         return cart;
     }
 
+    @Transactional
     public List<Cart> addToCart(CartRequest cartRequest) {
         Optional<List<Cart>> cartOptional = cartRepository.findUserCart(cartRequest.getUserId());
 

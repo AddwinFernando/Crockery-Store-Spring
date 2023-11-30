@@ -9,6 +9,7 @@ import com.restapi.response.CategoryResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -23,12 +24,14 @@ public class CategoryService {
         return categoryDto.mapToCategoryResponse(categories);
     }
 
+    @Transactional
     public CategoryResponse createCategory(CategoryRequest categoryRequest) {
         Category category = categoryDto.mapToCategory(categoryRequest);
         categoryRepository.save(category);
         return  findAll();
     }
 
+    @Transactional
     public CategoryResponse updateCategory(CategoryRequest categoryRequest) {
         Category category = categoryDto.mapToCategory(categoryRequest);
         categoryRepository.save(category);

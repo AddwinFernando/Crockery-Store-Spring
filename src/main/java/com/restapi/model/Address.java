@@ -9,6 +9,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -37,8 +38,9 @@ public class Address {
 
     @JsonIgnore
     @OneToMany(mappedBy = "address")
-    private List<Order> order;
+    private List<Order> order = new ArrayList<>();
 
+    @JsonIgnore
     @CreationTimestamp
     @Column(updatable = false)
     private LocalDateTime createdAt;

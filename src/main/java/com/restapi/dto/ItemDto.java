@@ -17,11 +17,12 @@ import java.util.stream.Collectors;
 public class ItemDto {
     @Autowired
     private CategoryRepository categoryRepository;
+
     public ItemResponse mapToItemResponse(List<Item> items) {
         ItemResponse itemResponse = new ItemResponse();
         List<ItemRequest> itemRequests = new ArrayList<>();
-        for (Item item:items){
-            itemRequests.add(new ItemRequest(item.getId(),item.getTitle(), item.getDescription(), item.getPrice(),item.getPhoto(),item.getCategory().getId()));
+        for (Item item : items) {
+            itemRequests.add(new ItemRequest(item.getId(), item.getTitle(), item.getDescription(), item.getPrice(), item.getPhoto(), item.getCategory().getId(), item.getStock()));
         }
         itemResponse.setItems(itemRequests);
         return itemResponse;
@@ -29,15 +30,16 @@ public class ItemDto {
 
     public Item mapToItem(ItemRequest itemRequest) {
         Item item = new Item();
-        if(itemRequest.getId() != null){
+        if (itemRequest.getId() != null) {
             item.setId(itemRequest.getId());
         }
         item.setTitle(itemRequest.getTitle());
         item.setDescription(itemRequest.getDescription());
         item.setPrice(itemRequest.getPrice());
         item.setPhoto(itemRequest.getPhoto());
+        item.setStock(itemRequest.getStock());
         Category category = categoryRepository.findById(itemRequest.getCategory())
-                .orElseThrow(()-> new ResourceNotFoundException("Item","ItemId", item.getId()));
+                .orElseThrow(() -> new ResourceNotFoundException("Item", "ItemId", item.getId()));
         item.setCategory(category);
         return item;
     }

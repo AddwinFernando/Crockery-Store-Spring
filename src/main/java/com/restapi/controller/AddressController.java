@@ -42,4 +42,12 @@ public class AddressController {
         apiResponse.setData(userAddresses);
         return new ResponseEntity<>(apiResponse , HttpStatus.OK);
     }
+
+    @DeleteMapping("/{user}/{id}")
+    public ResponseEntity<APIResponse> deleteAddress(@PathVariable Long user,@PathVariable Long id){
+        List<Address> userAddresses = addressService.delete(user,id);
+        apiResponse.setStatus(HttpStatus.OK.value());
+        apiResponse.setData(userAddresses);
+        return new ResponseEntity<>(apiResponse , HttpStatus.OK);
+    }
 }

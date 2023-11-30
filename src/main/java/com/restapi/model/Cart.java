@@ -33,6 +33,7 @@ public class Cart {
 
     private Integer count;
 
+    @JsonIgnore
     @CreationTimestamp
     @Column(updatable = false)
     private LocalDateTime createdAt;

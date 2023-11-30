@@ -7,6 +7,7 @@ import com.restapi.request.AddressRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Objects;
 
@@ -21,15 +22,24 @@ public class AddressService {
         return addressRepository.findAll().stream().filter(address -> Objects.equals(address.getAppUser().getId(), user)).toList();
     }
 
+    @Transactional
     public List<Address> addAddress(AddressRequest addressRequest) {
         Address address =addressDto.mapToAddress(addressRequest);
         addressRepository.save(address);
         return  findUserAddress(addressRequest.getUserId());
     }
 
+
+    @Transactional
     public List<Address> updateAddress(AddressRequest addressRequest) {
         Address address =addressDto.mapToAddress(addressRequest);
         addressRepository.save(address);
         return  findUserAddress(addressRequest.getUserId());
+    }
+
+
+    public List<Address> delete(Long user, Long id) {
+        addressRepository.deleteById(id);
+        return findUserAddress(user);
     }
 }

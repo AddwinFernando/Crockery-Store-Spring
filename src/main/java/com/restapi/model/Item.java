@@ -33,12 +33,15 @@ public class Item {
     @Column(nullable = false, length = 200)
     private Double price;
 
+    @Column(nullable = false, length = 200)
+    private int stock;
+
+    @JsonIgnore
     @Transient
     private Integer count;
 
-    @Lob
-    @Column(name = "photo", columnDefinition="BLOB")
-    private byte[] photo;
+    @Column(name = "photo")
+    private String photo;
 
     @JsonIgnore
     @ManyToOne
@@ -46,7 +49,7 @@ public class Item {
     private Category category;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "item")
+    @OneToMany(mappedBy = "item" ,cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Cart> carts = new ArrayList<>();
 
     @CreationTimestamp

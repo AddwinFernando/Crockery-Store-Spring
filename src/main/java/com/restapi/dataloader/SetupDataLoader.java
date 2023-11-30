@@ -46,16 +46,19 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 //        Create user
         createUserIfNotFound("user", "user", userRole);
         createUserIfNotFound("admin", "admin", adminRole);
-        createStatus("Pending");
-        createStatus("Out For Delivery");
-        createStatus("Delivered");
-        createStatus("Cancelled");
+        createStatus("Pending",1L);
+        createStatus("Out For Delivery",2L);
+        createStatus("Delivered",3L);
+        createStatus("Cancelled",4L);
 
         alreadySetup = true;
     }
 
-    private void createStatus(String Status) {
-        orderStatusRepository.save(new OrderStatus(Status));
+    private void createStatus(String Status,Long id) {
+        Optional<OrderStatus> orderStatus = orderStatusRepository.findById(id);
+        if(!orderStatus.isPresent()){
+            orderStatusRepository.save(new OrderStatus(Status));
+        }
     }
 
     @Transactional
