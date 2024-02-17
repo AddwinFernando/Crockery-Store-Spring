@@ -2,8 +2,11 @@ package com.restapi.service;
 
 import com.restapi.dto.ItemDto;
 import com.restapi.exception.common.ResourceNotFoundException;
+import com.restapi.model.Category;
 import com.restapi.model.Item;
+import com.restapi.repository.CategoryRepository;
 import com.restapi.repository.ItemRepository;
+import com.restapi.request.FilterRequest;
 import com.restapi.request.ItemRequest;
 import com.restapi.request.StockRequest;
 import com.restapi.response.ItemResponse;
@@ -18,6 +21,9 @@ import java.util.Objects;
 public class ItemService {
     @Autowired
     private ItemRepository itemRepository;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     @Autowired
     private ItemDto itemDto;
@@ -58,5 +64,34 @@ public class ItemService {
             itemRepository.save(item);
         }
         return findAll();
+    }
+
+    public ItemResponse filter(FilterRequest params) {
+        if(params.getCategory()>=0){
+            Category category = categoryRepository.findById(params.getCategory())
+                    .orElseThrow( ()-> new ResourceNotFoundException("category","categoryId", params.getCategory()));
+            List<Item> items = itemRepository.findByPriceBetweenAndCategory(params.getMinPrice(), params.getMaxPrice(), category);
+            return itemDto.mapToItemResponse(items);
+        }
+        else {
+            List<Item> items = itemRepository.findByPriceBetween(params.getMinPrice(), params.getMaxPrice());
+            return itemDto.mapToItemResponse(items);
+        }
+
+    }
+
+    public ItemResponse sortDsc() {
+        List<Item> items = itemRepository.findAllByOrderByPriceDesc();
+        return itemDto.mapToItemResponse(items);
+    }
+
+    public ItemResponse sortAsc() {
+        List<Item> items = itemRepository.findAllByOrderByPriceAsc();
+        return itemDto.mapToItemResponse(items);
+    }
+
+    public ItemResponse sortAlph() {
+        List<Item> items = itemRepository.findAllByOrderByTitleAsc();
+        return itemDto.mapToItemResponse(items);
     }
 }

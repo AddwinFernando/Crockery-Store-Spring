@@ -30,7 +30,6 @@ public class AppUser {
     @Size(min = 2, message = "Username should have at least 2 characters")
     private String username;
 
-    @Column(nullable = false, length = 100)
     @NotEmpty
     @Size(min = 2, message = "Password should have at least 2 characters")
     private String password;
