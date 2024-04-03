@@ -2,6 +2,8 @@ package com.restapi.model;
 
 
 import javax.persistence.*;
+
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -33,4 +35,9 @@ public class Category {
     private LocalDateTime createdAt;
 
     private Boolean deleteFlag = false;
+
+    public Category(Long id,String title) {
+        this.id = id;
+        this.title = title;
+    }
 }

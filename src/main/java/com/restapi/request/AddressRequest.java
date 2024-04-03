@@ -2,13 +2,15 @@ package com.restapi.request;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.restapi.model.AppUser;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class AddressRequest {
 
     private Long id;
